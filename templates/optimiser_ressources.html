@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Optimisation des ressources</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">⚙ Optimisation des ressources</h4>
+        </div>
+
+        <div class="card-body">
+
+            <p>Cette page permet de détecter et corriger :</p>
+            <ul>
+                <li>❌ Conflits d’horaires pour un étudiant</li>
+                <li>❌ Conflits de planning pour les professeurs</li>
+                <li>❌ Surcharge des salles</li>
+            </ul>
+
+            <hr>
+
+            <!-- Bouton lancer l'optimisation -->
+            <a href="{{ url_for('lancer_optimisation') }}" class="btn btn-success mb-3">
+                ▶ Lancer l’optimisation automatique
+            </a>
+
+            {% if detection_lancee %}
+
+            <!-- Affichage conflits étudiants -->
+            <h5>⚠ Conflits étudiants :</h5>
+            {% if conflits_etudiants %}
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Étudiant</th>
+                            <th>Date Examen</th>
+                            <th>Heure Début</th>
+                            <th>Nombre examens</th>
+                            <th>Action suggérée</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in conflits_etudiants %}
+                        <tr>
+                            <td>{{ c.id_etudiant }}</td>
+                            <td>{{ c.date_exam }}</td>
+                            <td>{{ c.heure_debut }}</td>
+                            <td>{{ c.nb_examens }}</td>
+                            <td>Décaler un examen / Créer créneau libre</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-success">✅ Aucun conflit étudiant détecté</div>
+            {% endif %}
+
+            <!-- Affichage conflits professeurs -->
+            <h5 class="mt-4">⚠ Conflits professeurs :</h5>
+            {% if conflits_profs %}
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Professeur</th>
+                            <th>Date Examen</th>
+                            <th>Heure Début</th>
+                            <th>Nombre examens</th>
+                            <th>Action suggérée</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in conflits_profs %}
+                        <tr>
+                            <td>{{ p.id_prof }}</td>
+                            <td>{{ p.date_exam }}</td>
+                            <td>{{ p.heure_debut }}</td>
+                            <td>{{ p.nb_examens }}</td>
+                            <td>Réaffecter un examen / Décaler</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-success">✅ Aucun conflit professeur détecté</div>
+            {% endif %}
+
+            <!-- Affichage conflits salles -->
+            <h5 class="mt-4">⚠ Conflits de surcharge de salle :</h5>
+            {% if conflits_salles %}
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Examen</th>
+                            <th>Salle</th>
+                            <th>Capacité</th>
+                            <th>Nombre d'étudiants</th>
+                            <th>Action suggérée</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in conflits_salles %}
+                        <tr>
+                            <td>{{ s.id_examen }}</td>
+                            <td>{{ s.nom_salle }}</td>
+                            <td>{{ s.capacite }}</td>
+                            <td>{{ s.nb_etudiants }}</td>
+                            <td>Réaffecter dans une salle plus grande ou créer créneau libre</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-success">✅ Aucun conflit de salle détecté</div>
+            {% endif %}
+
+            {% endif %}
+
+            <a href="{{ url_for('administrateur') }}" class="btn btn-secondary mt-3">
+                ⬅ Retour
+            </a>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Génération EDT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">📅 Génération Automatique de l’Emploi du Temps</h2>
+
+    <div class="alert alert-info text-center">
+        Cette page permet de générer automatiquement les examens manquants
+        (un examen par module).
+    </div>
+
+    <form method="post" class="text-center mb-4">
+        <button class="btn btn-success btn-lg">
+            ⚙️ Lancer la génération
+        </button>
+    </form>
+
+    {% if message %}
+        <div class="alert alert-success text-center">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    {% if planning %}
+    <table class="table table-bordered table-striped mt-4">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Departement</th>
+                <th>Formation</th>
+                <th>Module</th>
+                <th>Date</th>
+                <th>Durée (h)</th>
+                <th>Salle</th>
+                <th>Professeur</th>
+            </tr>
+
+        </thead>
+        <tbody class="text-center">
+            {% for e in planning %}
+            <tr>
+                <td>{{ e.departement }}</td>
+                <td>{{ e.formation }}</td>
+                <td>{{ e.nom_module }}</td>
+                <td>{{ e.date_exam }}</td>
+                <td>{{ e.duree }}</td>
+                <td>{{ e.nom_salle }}</td>
+                <td>{{ e.professeur }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-center text-muted mt-4">
+            Aucun examen généré pour le moment.
+        </p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('administrateur') }}" class="btn btn-secondary">
+            ⬅ Retour
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

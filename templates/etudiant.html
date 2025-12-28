@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Espace Étudiant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+        <a class="navbar-brand" href="#">🎓 Portail Étudiant</a>
+        <div class="d-flex">
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-light">
+                <i class="bi bi-box-arrow-right"></i> Déconnexion
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Contenu principal -->
+<div class="container mt-5">
+
+    <!-- Bienvenue -->
+    <div class="text-center mb-5">
+        <h1 class="display-4">Bonjour, {{ session.get('username', 'Étudiant') }} !</h1>
+        <p class="lead">Consultez votre planning des examens .</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="row g-4 justify-content-center">
+
+        <!-- Planning -->
+        <div class="col-md-5 col-lg-4">
+            <div class="card border-primary shadow h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-calendar-event display-1 text-primary mb-3"></i>
+                    <h5 class="card-title mb-3">Planning des examens</h5>
+                    <p class="card-text mb-4">Visualisez vos dates d’examen, horaires et salles.</p>
+                    <a href="{{ url_for('planning_etudiant') }}" class="btn btn-primary btn-lg">
+                        Consulter mon planning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+      
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 text-center text-muted">
+        &copy; {{ current_year }} Université - Tous droits réservés
+    </footer>
+
+</div>
+
+</body>
+</html>
